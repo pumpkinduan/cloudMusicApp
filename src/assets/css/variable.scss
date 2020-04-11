@@ -1,0 +1,25 @@
+// 字体大小定义规范, 这里的'Px'中的'P'是大写的，postcss-pxtorem插件不会将其转换为rem
+$font_small: 12Px;
+$font_medium_s: 13Px;
+$font_medium: 15Px;
+$font_large: 17Px;
+$font_super_large: 20Px;
+$font_icon_size1: 26Px;
+$font_icon_size2: 28Px;
+$font_icon_size3: 30Px;
+$font_icon_size4: 36Px;
+
+// 背景颜色定义规范(主要)
+$theme_bright: #d43c33;
+$theme_skyblue: #179ed3;
+$theme_dark: #605e5e;
+
+// 背景颜色定义规范(次要)
+$theme_sub_bright: #fff;
+$theme_sub_skyblue: #cfe1e8;
+$theme_sub_dark: #cdcdcd;
+
+// 字体颜色定义规范(次要)
+$font_sub_bright: $theme_bright;
+$font_sub_skyblue: $theme_skyblue;
+$font_sub_yellow: #bd9954;

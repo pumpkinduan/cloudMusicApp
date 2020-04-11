@@ -1,29 +1,104 @@
-import Vue from 'vue'
-import VueRouter from 'vue-router'
-import Home from '../views/Home.vue'
+import Vue from "vue";
+import VueRouter from "vue-router";
+// 利用Vue的异步组件，实现组件的按需加载 => 路由懒加载
+const Recommend = resolve => {
+  import("../views/Recommend.vue").then(module => {
+    resolve(module);
+  });
+};
 
-Vue.use(VueRouter)
+const SongListDetail = resolve => {
+  import("../views/SongListDetail.vue").then(module => {
+    resolve(module);
+  });
+};
+
+const Rank = resolve => {
+  import("../views/Rank.vue").then(module => {
+    resolve(module);
+  });
+};
+
+const Singer = resolve => {
+  import("../views/Singer.vue").then(module => {
+    resolve(module);
+  });
+};
+const Detail = resolve => {
+  import("../views/Detail.vue").then(module => {
+    resolve(module);
+  });
+};
+const Search = resolve => {
+  import("../views/Search.vue").then(module => {
+    resolve(module);
+  });
+};
+
+const Account = resolve => {
+  import("../views/Account.vue").then(module => {
+    resolve(module);
+  });
+};
+
+Vue.use(VueRouter);
 
 const routes = [
   {
-    path: '/',
-    name: 'Home',
-    component: Home
+    path: "/",
+    redirect: "/recommend"
   },
   {
-    path: '/about',
-    name: 'About',
-    // route level code-splitting
-    // this generates a separate chunk (about.[hash].js) for this route
-    // which is lazy-loaded when the route is visited.
-    component: () => import(/* webpackChunkName: "about" */ '../views/About.vue')
+    path: "/recommend",
+    name: "Recommend",
+    component: Recommend
+  },
+  {
+    path: "/songListDetail/:id",
+    name: "SongListDetail",
+    component: SongListDetail
+  },
+  {
+    path: "/account",
+    name: "Account",
+    component: Account
+  },
+  {
+    path: "/singer",
+    name: "Singer",
+    component: Singer,
+    children: [
+      {
+        path: "detail/:id",
+        name: "Detail",
+        component: Detail
+      }
+    ]
+  },
+
+  {
+    path: "/rank",
+    name: "Rank",
+    component: Rank,
+    children: [
+      {
+        path: "detail/:id",
+        name: "Detail",
+        component: Detail
+      }
+    ]
+  },
+  {
+    path: "/search",
+    name: "Search",
+    component: Search
   }
-]
+];
 
 const router = new VueRouter({
-  mode: 'history',
+  mode: "hash",
   base: process.env.BASE_URL,
   routes
-})
+});
 
-export default router
+export default router;

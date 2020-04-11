@@ -1,17 +1,42 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width,initial-scale=1.0">
-    <link rel="icon" href="<%= BASE_URL %>favicon.ico">
-    <title><%= htmlWebpackPlugin.options.title %></title>
-  </head>
-  <body>
-    <noscript>
-      <strong>We're sorry but <%= htmlWebpackPlugin.options.title %> doesn't work properly without JavaScript enabled. Please enable it to continue.</strong>
-    </noscript>
-    <div id="app"></div>
-    <!-- built files will be auto injected -->
-  </body>
+
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <link rel="icon" href="favicon.ico">
+  <title>音乐</title>
+  <link rel="stylesheet" href="https://at.alicdn.com/t/font_1715908_ho5aaoxm3ks.css">
+</head>
+
+<body>
+  <noscript>
+    <strong>We're sorry but <%= htmlWebpackPlugin.options.title %> doesn't work properly without JavaScript enabled.
+      Please enable it to continue.</strong>
+  </noscript>
+  <div id="app"></div>
+</body>
+<script>
+  let meta = document.createElement('meta');
+  // CSS像素的缩放比例
+  let scale = 1 / window.devicePixelRatio || 1;
+  meta.setAttribute('name', 'viewport');
+  meta.setAttribute('content', `width=device-width,initial-scale=${scale}, user-scalable=no, maximum-scale=${scale}, minimum-scale=${scale}`);
+  document.head.append(meta);
+  window.addEventListener('DOMContentLoaded', function () {
+    document.documentElement.style.fontSize = Math.floor(document.documentElement.clientWidth / 7.5) + 'px';
+    document.documentElement.setAttribute('data-dpr', window.devicePixelRatio.toFixed(2) || 1);
+  })
+  document.documentElement.setAttribute('data-theme', 'theme');
+</script>
+
 </html>
+<!-- 
+  1.初始化HTML中的代码 
+  2.利用rem+视口缩放的方式来适配移动端
+  3.如何在index.html中用到了字符串模板，该模板中用到了变量，html-plugin是无法处理的，所以会报错
+    解决的话可以借助html-loader
+  4.借助postcss-pxtorem将px自动转换为rem
+  5.借助fastclick解决移动端点击事件的100-300ms延迟
+  6.初始化默认的全局样式
+-->
