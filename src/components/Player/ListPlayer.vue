@@ -13,7 +13,7 @@
             <i class="iconfont iconshanchu1"></i>
           </div>
         </div>
-        <div style="height: 100%;">
+        <div class="bottom">
           <ScrollView ref="scrollView">
             <ul>
               <li v-for="(item, index) in songs" :key="index" @click="playMS(index, item.id)">
@@ -88,7 +88,7 @@ export default {
       'setPlayMode',
       'delSong',
       'setCurIndex',
-      'getSongLyric'
+      'setSongLyric'
     ]),
     changePlayMode() {
       this.index = ++this.index % this.modes.length;
@@ -106,7 +106,7 @@ export default {
     playMS(index, id) {
       this.setCurIndex(index);
       this.setPlayState(true);
-      this.getSongLyric(id);
+      this.setSongLyric(id);
     }
   }
 };
@@ -132,6 +132,8 @@ export default {
     bottom: 0;
     left: 0;
     .top-control {
+      height: 100px;
+      box-sizing: border-box;
       padding: 15px 20px;
       border-bottom: 1px solid #999;
       display: flex;
@@ -139,7 +141,6 @@ export default {
       align-items: center;
       background: #fff;
       position: relative;
-      z-index: 999;
       .left {
         display: inline-flex;
         align-items: center;
@@ -149,34 +150,27 @@ export default {
         }
       }
     }
-    ul {
-      li {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        padding: 10px 20px;
-        .left {
-          display: inline-flex;
+    .bottom {
+      height: 500px;
+      ul {
+        li {
+          display: flex;
+          justify-content: space-between;
           align-items: center;
-         flex: 1;
-          span {
-            margin-left: 20px;
-            color: #433;
-          }
-        }
-        &:last-child {
-          border: none;
-          padding-bottom: 55%;
-          position: relative;
-          left: 2%;
-          &::before {
-            content: '主人，没有更多了噢 !';
-            color: #999;
-            @include font_size($font_medium_s);
+          padding: 10px 20px;
+          .left {
+            display: inline-flex;
+            align-items: center;
+            flex: 1;
+            span {
+              margin-left: 20px;
+              color: #433;
+            }
           }
         }
       }
     }
+
     i {
       @include font_size($font_icon_size2);
     }

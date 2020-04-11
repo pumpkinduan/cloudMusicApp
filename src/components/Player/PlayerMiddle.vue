@@ -12,7 +12,8 @@
     <div v-show="hidden" class="show-complete-lyric" @click.stop="showLyric">点击查看完整歌词 》</div>
 
     <section ref="wrap_lyric" :class="[hidden?'hidden': '' ,'wrap-lyric']">
-      <ScrollView ref="scrollView">
+      <p v-if="curLyric.nolyric" class="nolyric">{{curLyric.text}}</p>
+      <ScrollView ref="scrollView" v-else>
         <div class="lyric" ref="lyric">
           <p
             :class="{'active': lineNum === prop}"
@@ -44,6 +45,7 @@ export default {
   },
   watch: {
     curTime(newVal) {
+      if (this.curLyric.nolyric) return;
       // 同步高亮歌词
       let num = Math.floor(newVal);
       // 若是当前播放歌曲的时间对应有歌词，则让当前歌词进行高亮
@@ -51,6 +53,7 @@ export default {
       this.autoScroll();
     },
     curLyric(newVal) {
+       if (this.curLyric.nolyric) return;
       // 切换歌曲时，歌词变动，将歌词界面重新回滚到顶部
       this.$refs.scrollView.scrollTo(0, 0, 200);
       for (let key in newVal) {
@@ -165,7 +168,12 @@ export default {
     @include font_size($font_large);
   }
   .wrap-lyric {
-    overflow: hidden;
+    .nolyric {
+      position: relative;
+      top: 50%;
+      transform: translateY(-50%);
+      @include font_size($font_large);
+    }
     .lyric {
       p {
         padding: 15px 0;

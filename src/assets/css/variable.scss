@@ -12,14 +12,18 @@ $font_icon_size4: 36Px;
 // 背景颜色定义规范(主要)
 $theme_bright: #d43c33;
 $theme_skyblue: #179ed3;
-$theme_dark: #605e5e;
+$theme_dark: #504507;
 
 // 背景颜色定义规范(次要)
 $theme_sub_bright: #fff;
 $theme_sub_skyblue: #cfe1e8;
-$theme_sub_dark: #cdcdcd;
+$theme_sub_dark: #e6e6d8;
 
 // 字体颜色定义规范(次要)
 $font_sub_bright: $theme_bright;
 $font_sub_skyblue: $theme_skyblue;
 $font_sub_yellow: #bd9954;
+
+
+// 定义迷你播放器的高度，由于多个地方要使用，所以抽取出来
+$mini_player_height: 140px;

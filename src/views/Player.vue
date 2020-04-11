@@ -47,12 +47,17 @@ export default {
       'setCurIndex',
       'setCurTime',
       'setTotalTime',
-      'getSongLyric',
+      'setSongLyric',
       'setLikeSongs',
       'setHistorySongs'
     ])
   },
   watch: {
+    curSong(newVal) {
+      if (newVal.id) {
+        this.setSongLyric(newVal.id);
+      }
+    },
     isPlaying(newVal) {
       if (newVal) {
         this.$refs.audio.play();
@@ -77,9 +82,9 @@ export default {
         //  切换歌曲时，重新获取当前播放时长
         this.setCurTime(this.$refs.audio.currentTime);
         //  切换歌曲时，重新获取当前播放歌曲的歌词
-        this.getSongLyric(this.curSong['id']);
+        this.setSongLyric(this.curSong['id']);
         // 添加歌曲到播放历史列表
-        this.setHistorySongs([this.curSong]);
+        this.setHistorySongs({songs: [this.curSong]});
       };
     },
     likeSongs(newVal) {
@@ -96,7 +101,7 @@ export default {
       this.setLikeSongs({ flag: true, songs: likedList });
     }
     if (historyList) {
-      this.setHistorySongs(historyList);
+      this.setHistorySongs({songs: historyList});
     }
   },
   mounted() {

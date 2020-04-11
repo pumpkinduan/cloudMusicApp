@@ -45,7 +45,7 @@ export default {
   bottom: 0;
   left: 0;
   box-sizing: border-box;
-  height: 140px;
+  height: $mini_player_height;
   overflow: hidden;
   z-index: 9;
   padding: 20px 10px;

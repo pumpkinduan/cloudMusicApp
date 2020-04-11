@@ -3,8 +3,7 @@ import Vue from "vue";
 //进行全局的默认配置
 
 axios.defaults.baseURL = process.env.NODE_ENV === "production" ? "/" : "/api";
-axios.defaults.timeout = 8000;
-
+axios.defaults.timeout = 10000;
 // 添加请求拦截器
 let reqCount = 0; //记录请求次数，处理并发请求
 axios.interceptors.request.use(
@@ -23,15 +22,25 @@ axios.interceptors.request.use(
 axios.interceptors.response.use(
   function(response) {
     reqCount--;
-    if (reqCount === 0) {
+    if (reqCount <= 0) {
       Vue.$hiddenLoading();
     }
     return response;
   },
   function(error) {
     // 对响应错误做点什么
-    Vue.$hiddenLoading();
-    return Promise.reject(error);
+    reqCount--;
+    if (reqCount <= 0) {
+      Vue.$hiddenLoading();
+    }
+    let resErr = error;
+    if (error.response) {
+      resErr = error.response.data;
+    }
+    if (error.message.includes("timeout")) {
+      Vue.$showDialog();
+    }
+    return Promise.reject(resErr);
   }
 );
 

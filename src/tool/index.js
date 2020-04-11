@@ -1,6 +1,7 @@
 export const setLocalStorage = (key, value) => {
   return window.localStorage.setItem(key, JSON.stringify(value));
 };
+export const removeLocalStorage = key => window.localStorage.removeItem(key);
 export const getLocalStorage = key =>
   JSON.parse(window.localStorage.getItem(key));
 

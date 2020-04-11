@@ -3,9 +3,9 @@
     <Header>
       <i slot="left" class="iconfont iconarrow-lift" @click.stop="$router.go(-1)"></i>
       <div class="top_title" slot="title">
-        <div @click.stop="switchList(true)" :class="{'active': isActive}">我的喜欢</div>
+        <div @click.stop="switchList(0)" :class="{'active': isActive}">我的喜欢</div>
         <span>|</span>
-        <div @click.stop="switchList(false)" :class="{'active': !isActive}">播放历史</div>
+        <div @click.stop="switchList(1)" :class="{'active': !isActive}">播放历史</div>
       </div>
       <i slot="right" class="iconfont iconxiaoyanjing"></i>
     </Header>
@@ -26,8 +26,8 @@ export default {
     }
   },
   methods: {
-    switchList(flag) {
-      this.$emit('switchList' ,flag);
+    switchList(num) {
+      this.$emit('switchList', num);
     }
   }
 };
@@ -42,17 +42,17 @@ export default {
   z-index: 2;
   .top_title {
     display: flex;
-    @include font_size($font_medium);
-    color: #555;
-    border: 1px solid #ddd;
-    border-radius: 10px;
-    background: pink;
+    @include font_size($font_medium_s);
     align-items: center;
+    color: #ccc;
+    font-weight: 400;
     div {
+      transition: all 0.3s;
       padding: 8px 8px;
       &.active {
-        color: #333;
-        background: #ffd580;
+        color: #fff;
+        font-weight: bolder;
+        @include font_size($font_large);
       }
     }
     span {

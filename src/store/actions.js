@@ -4,15 +4,20 @@ import {
   SET_LIST_PLAYER,
   SET_PlAY_STATE,
   SET_PLAY_MODE,
-  GET_SONG_DETAIL,
-  GET_SONG_LYRIC,
+  SET_SONG_DETAIL,
+  SET_SONG_LYRIC,
   SET_CUR_INDEX,
   SET_CUR_TIME,
   SET_TOTAL_TIME,
   SET_Like_SONGS,
   SET_HISTORY_SONGS
 } from "./mutation-type";
-import { getSongDetails, getSongLyrics, getSongUrl } from "../api/index";
+import {
+  checkSongUrl,
+  getSongDetails,
+  getSongLyrics,
+  getSongUrl
+} from "../api/index";
 export default {
   setFSPlayer({ commit }, bool) {
     commit("SET_FS_PLAYER", bool);
@@ -29,7 +34,7 @@ export default {
   setPlayMode({ commit }, mode) {
     commit("SET_PLAY_MODE", mode);
   },
-  async getSongDetail({ commit }, ids = []) {
+  async setSongDetail({ commit }, ids = []) {
     let result = await getSongDetails(ids.join(","));
     let urls = await getSongUrl(ids.join(","));
     let data = [];
@@ -53,14 +58,25 @@ export default {
           info.singer += " / " + val.name;
         }
       });
-      data.push(info);
+      checkSongUrl(item.id).then(
+        suc => {
+          info.allowed = suc;
+          data.push(info);
+        },
+        err => {
+          info.allowed = err;
+          data.push(info);
+        }
+      );
     });
-    commit("GET_SONG_DETAIL", data);
+    commit("SET_SONG_DETAIL", data);
   },
-  async getSongLyric({ commit }, id) {
+  async setSongLyric({ commit }, id) {
     let lyric = await getSongLyrics(id);
-    let handledlyric = parseLyric(lyric.lrc.lyric);
-    commit("GET_SONG_LYRIC", handledlyric);
+    let handledlyric = lyric.nolyric
+      ? { text: "没有歌词噢, 好好享受纯音乐吧", nolyric: true }
+      : parseLyric(lyric.lrc.lyric);
+    commit("SET_SONG_LYRIC", handledlyric);
   },
   delSong({ commit }, index) {
     commit("DEL_SONG", index);
@@ -74,11 +90,11 @@ export default {
   setTotalTime({ commit }, time) {
     commit("SET_TOTAL_TIME", time);
   },
-  setLikeSongs({ commit }, { flag, songs }) {
-    commit("SET_Like_SONGS", { flag, songs });
+  setLikeSongs({ commit }, { flag, songs, empty }) {
+    commit("SET_Like_SONGS", { flag, songs, empty });
   },
-  setHistorySongs({ commit }, song) {
-    commit("SET_HISTORY_SONGS", song);
+  setHistorySongs({ commit }, { songs, empty }) {
+    commit("SET_HISTORY_SONGS", { songs, empty });
   }
 };
 //格式化歌词

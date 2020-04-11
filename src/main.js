@@ -5,6 +5,7 @@ import store from "./store";
 import "./assets/css/base.scss";
 import VueLazyLoad from "vue-lazyload";
 import Loading from "./plugins/loading/index.js";
+import Dialog from "./plugins/Dialog/index.js";
 Vue.directive("debounce", {
   inserted: (el, binding) => {
     let timer = null;
@@ -23,6 +24,7 @@ Vue.directive("debounce", {
   }
 });
 Vue.use(Loading)
+Vue.use(Dialog)
 Vue.use(VueLazyLoad, {
   preLoad: 1.3,
   error: require("./assets/images/error.jpg"),

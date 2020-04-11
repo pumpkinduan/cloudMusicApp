@@ -4,8 +4,8 @@ import {
   SET_LIST_PLAYER,
   SET_PlAY_STATE,
   SET_PLAY_MODE,
-  GET_SONG_DETAIL,
-  GET_SONG_LYRIC,
+  SET_SONG_DETAIL,
+  SET_SONG_LYRIC,
   DEL_SONG,
   SET_CUR_INDEX,
   SET_CUR_TIME,
@@ -40,10 +40,10 @@ export default {
   [SET_PLAY_MODE](state, mode) {
     state.playMode = mode;
   },
-  [GET_SONG_DETAIL](state, data) {
+  [SET_SONG_DETAIL](state, data) {
     state.songs = data;
   },
-  [GET_SONG_LYRIC](state, data) {
+  [SET_SONG_LYRIC](state, data) {
     state.curLyric = data;
   },
   [DEL_SONG](state, index) {
@@ -78,7 +78,11 @@ export default {
   [SET_TOTAL_TIME](state, time) {
     state.totalTime = time;
   },
-  [SET_Like_SONGS](state, { flag, songs }) {
+  [SET_Like_SONGS](state, { flag, songs, empty }) {
+    if (empty) {
+      state.likeSongs = [];
+      return;
+    } //清空
     if (flag) {
       state.likeSongs.push(...songs);
     } else {
@@ -93,7 +97,11 @@ export default {
       }
     }
   },
-  [SET_HISTORY_SONGS](state, songs) {
+  [SET_HISTORY_SONGS](state, { songs, empty }) {
+    if (empty) {
+      state.historySongs = [];
+      return;
+    } //清空
     // 播放一首歌曲往历史列表中添加一首，所以songs长度为1
     // 若是从缓存中取出数据，则songs的长度大于1
     if (songs.length > 1) {
@@ -101,12 +109,12 @@ export default {
       return;
     }
     // 避免重复添加相同歌曲
-    let flag = state.historySongs.find(val => {
+    let index = state.historySongs.findIndex(val => {
       return val.id === songs[0].id;
     });
-    if (!flag) {
-      // 历史列表容量为66，大于则删除一首后进行添加
-      if (state.historySongs.length > 66) {
+    if (index === -1) {
+      // 历史列表容量为33，大于则删除一首后进行添加
+      if (state.historySongs.length > 33) {
         state.historySongs.splice(0, 1);
       }
       state.historySongs.push(...songs);

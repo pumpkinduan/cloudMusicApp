@@ -74,13 +74,17 @@ export default {
   z-index: 2;
 }
 .rank-wrapper {
-  height: 100vh;
+  position: fixed;
+  top: 180px;
+  bottom: 0;
+  left:0;
+  right: 0;
 }
 .rank-inner {
   section {
     padding: 0 10px;
     &:last-child {
-      padding-bottom: 85%;
+      padding-bottom: $mini_player_height + 30px;
     }
     .offical-list-wrap {
       li {
@@ -142,8 +146,8 @@ export default {
           color: #555;
         }
         img {
-          width: 100%;
-          height: 100%;
+          width: 220px;
+          height: 220px;
           border-radius: 15px;
         }
       }

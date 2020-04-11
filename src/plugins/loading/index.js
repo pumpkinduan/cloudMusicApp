@@ -10,7 +10,6 @@ export default {
     document.body.appendChild(oDiv);
     //手动挂载Loading实例
     loadingInstance.$mount(oDiv);
-
     //添加全局方法
     Vue.$hiddenLoading = () => {
       loadingInstance.isShow = false;

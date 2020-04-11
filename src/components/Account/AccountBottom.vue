@@ -3,14 +3,14 @@
     <ScrollView>
       <SongItem :songsData="songsData">
         <h3 class="title">
-          <i
-            @click="playAllMusic"
-            class="iconfont iconbofanganniu1"
-          ></i>
+          <i @click="playAllMusic" class="iconfont iconbofanganniu1"></i>
           <div class="playlists-size">
             播放全部
-            <span>(共{{songsData.length}}首)</span>
+            <span class="count">(共{{songsData.length}}首)</span>
           </div>
+          <span class="lajitong">
+            <i class="iconfont iconshanchu1" @click="clearAllList"></i>
+          </span>
         </h3>
       </SongItem>
     </ScrollView>
@@ -27,11 +27,6 @@ export default {
     SongItem,
     ScrollView
   },
-  data() {
-    return {
-      play: false
-    };
-  },
   props: {
     songsData: {
       type: Array,
@@ -43,15 +38,18 @@ export default {
     ...mapGetters(['isPlaying', 'curIndex'])
   },
   methods: {
+    clearAllList() {
+      this.$emit('clearAllList');
+    },
     ...mapActions([
       'setFSPlayer',
-      'getSongLyric',
+      'setSongLyric',
       'setPlayState',
       'setCurIndex'
     ]),
     // 播放歌单内的所有歌曲
     playAllMusic() {
-      if (this.songsData.length === 0) return
+      if (this.songsData.length === 0) return;
       this.setCurIndex(0); //重置索引为0，从第0首开始播放
       this.setPlayState(true);
       let ids = this.songsData.map(item => {
@@ -59,12 +57,12 @@ export default {
       });
       this.setFSPlayer(true);
       //从缓存中直接提取数据，获取歌单内的所有歌曲信息，而不用通过Auction进行数据请求
-      this.$store.commit('GET_SONG_DETAIL', this.songsData);
+      this.$store.commit('SET_SONG_DETAIL', this.songsData);
       // this.getSongDetail(ids);
       // 默认播放第0首
       this.setCurIndex(0);
       //获取当前播放歌曲的歌词
-      this.getSongLyric(ids[this.curIndex]);
+      this.setSongLyric(ids[this.curIndex]);
     }
   }
 };
@@ -84,11 +82,15 @@ export default {
     padding: 30px 0 10px 18px;
     display: flex;
     align-items: center;
+    .lajitong {
+      text-align: right;
+      flex-grow: 1;
+    }
     i {
       margin-right: 10px;
       @include font_size($font_icon_size1);
     }
-    span {
+    span.count {
       color: #999;
       margin-left: 10px;
     }

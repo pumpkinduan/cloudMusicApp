@@ -6,19 +6,22 @@
       <i @click="s_words = ''" class="iconfont s-icon iconshanchu"></i>
     </div>
     <div class="inner-list" v-show="s_words">
-      <ul class="s-list" v-if="playlists.length === 0 && sugList.length > 0">
-        <li class="s-item s-keyword" @click="searchList(s_words)">搜索{{s_words}}</li>
-        <li
-          class="s-item"
-          @click="searchList(item.keyword)"
-          v-for="(item, index) in sugList"
-          :key="index"
-        >
-          <i class="iconfont s-icon iconsousuo"></i>
-          <span>{{item.keyword}}</span>
-        </li>
-      </ul>
-      <SongItem v-else :songsData="playlists" />
+      <ScrollView>
+        <ul class="s-list" v-if="playlists.length === 0 && sugList.length > 0">
+          <li class="s-item s-keyword" @click="searchList(s_words)">搜索{{s_words}}</li>
+          <li
+            class="s-item"
+            @click="searchList(item.keyword)"
+            v-for="(item, index) in sugList"
+            :key="index"
+          >
+            <i class="iconfont s-icon iconsousuo"></i>
+            <span>{{item.keyword}}</span>
+          </li>
+        </ul>
+
+        <SongItem v-else :songsData="playlists" />
+      </ScrollView>
     </div>
     <div ref="s_hots" class="s-hots" v-show="!s_words">
       <h4>热门搜索</h4>
@@ -56,7 +59,12 @@
 </template>
 
 <script>
-import { getSearchSuggest, getSearchList, getHotSearch } from '../api/index';
+import {
+  checkSongUrl,
+  getSearchSuggest,
+  getSearchList,
+  getHotSearch
+} from '../api/index';
 import { setLocalStorage, getLocalStorage } from '../tool/index';
 import ScrollView from '../components/ScrollView';
 import SongItem from '../components/SongItem';
@@ -88,14 +96,18 @@ export default {
     s_words(newVal) {
       this.playlists = [];
       this.sugList = [];
-      if (newVal === '') {
-        // 显示搜索记录列表，此时才能重新计算滚动范围
+    },
+    playlists(newVal) {
+      if (this.s_words !== '') {
         this.$nextTick(() => {
           this.$refs.scrollView.refresh();
         });
       }
     },
     searchHistory(newVal) {
+      this.$nextTick(() => {
+        this.$refs.scrollView.refresh();
+      });
       setLocalStorage('searchHistory', this.searchHistory);
     }
   },
@@ -142,6 +154,7 @@ export default {
       getSearchList(keywords).then(
         data => {
           data.result.songs.forEach((item, index) => {
+            // 检查音乐是否可用
             let resObj = {};
             resObj.id = item.id;
             resObj.name = item.name;
@@ -154,7 +167,16 @@ export default {
               if (i === 3) return;
             });
             resObj.singer = singer;
-            this.playlists.push(resObj);
+            checkSongUrl(item.id).then(
+              suc => {
+                resObj.allowed = suc;
+                this.playlists.push(resObj);
+              },
+              err => {
+                resObj.allowed = err;
+                this.playlists.push(resObj);
+              }
+            );
           });
         },
         err => {
@@ -202,8 +224,6 @@ export default {
   }
   .inner-list {
     height: 100%;
-    overflow: auto;
-
     .s-list {
       border-top: 1px solid #eee;
       padding-top: 22px;
@@ -211,6 +231,10 @@ export default {
       width: 95%;
       box-sizing: border-box;
       .s-item {
+        &:last-child {
+          padding-bottom: $mini_player_height + 30px;
+          border: none;
+        }
         .s-from {
           color: #777;
           margin-top: 10px;
@@ -261,7 +285,7 @@ export default {
       padding: 22px 0;
       @include font_size($font_medium);
       &:last-child {
-        padding-bottom: 40%;
+        padding-bottom: $mini_player_height + 25px;
         border: none;
       }
       span {

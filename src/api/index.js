@@ -6,6 +6,7 @@ export const getNewestSong = () => server.get("/personalized/newsong");
 export const getSongDetails = ids => server.get("/song/detail", { ids });
 export const getSongLyrics = id => server.get("/lyric", { id });
 export const getSongUrl = ids => server.get("/song/url", { id: ids });
+export const checkSongUrl = id => server.get('/check/music', {id});
 export const getArtists = id => server.get("/artists", { id });
 export const getHotSingers = () => {
   return new Promise((resolve, reject) => {

@@ -21,7 +21,7 @@ export default {
       scrollbars: false,
       probeType: 3,
       scrollbars: true,
-      fadeScrollbars:true,
+      fadeScrollbars: true,
       click: true,
       // 解决拖拽卡顿问题
       scrollX: false,
@@ -63,9 +63,11 @@ export default {
       });
     },
     refresh() {
-      setTimeout(() => {
-        this.iScroll.refresh();
-      }, 100);
+      this.$nextTick(() => {
+        setTimeout(() => {
+          this.iScroll.refresh();
+        }, 100);
+      });
     },
     scrollTo(x, y, time) {
       this.iScroll.scrollTo(x, y, time);

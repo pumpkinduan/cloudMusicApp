@@ -58,6 +58,8 @@ export default {
 
 <style lang="scss" scoped>
 .wrapper {
+  height: 360px;
+  box-sizing: border-box;
   padding: 60px 20px;
   position: relative;
   .blur_bg {

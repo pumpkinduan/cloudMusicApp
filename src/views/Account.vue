@@ -1,7 +1,7 @@
 <template>
   <div class="account">
     <AccountHeader :isActive="isActive" @switchList="switchList" />
-    <AccountBottom :songsData="songsData" />
+    <AccountBottom @clearAllList="clearAllList" :songsData="songsData" />
   </div>
 </template>
 
@@ -9,6 +9,8 @@
 import AccountHeader from '../components/Account/AccountHeader';
 import AccountBottom from '../components/Account/AccountBottom';
 import { mapGetters } from 'vuex';
+import { removeLocalStorage } from '../tool/index';
+import { mapActions } from 'vuex';
 export default {
   components: {
     AccountHeader,
@@ -17,18 +19,37 @@ export default {
   data() {
     return {
       isActive: true,
-      songsData: []
+      songsData: [],
+      //0 代表我的喜欢  1代表播放历史
+      switchNum: 0
     };
   },
   computed: {
     ...mapGetters(['historySongs', 'likeSongs'])
   },
   methods: {
-    switchList(flag) {
-      this.isActive = flag;
-      if (this.isActive) {
+     ...mapActions([
+      'setLikeSongs',
+      'setHistorySongs'
+    ]),
+    clearAllList() {
+      this.songsData = [];
+      if (this.switchNum === 0) {
+        removeLocalStorage('likedList');
+        this.setLikeSongs({empty: true})
+      }
+      if (this.switchNum === 1) {
+        this.setHistorySongs({empty: true})
+        removeLocalStorage('historyList');
+      }
+    },
+    switchList(num) {
+      this.switchNum = num;
+      if (this.switchNum === 0) {
+        this.isActive = true;
         this.songsData = this.likeSongs;
-      } else {
+      } else if (this.switchNum === 1) {
+        this.isActive = false;
         this.songsData = this.historySongs;
       }
     }

@@ -16,7 +16,6 @@
             <p>{{item.ar[0].name}} - {{item.al.name}}</p>
           </div>
         </li>
-        <li></li>
       </ul>
     </ScrollView>
   </div>
@@ -44,14 +43,14 @@ export default {
   methods: {
     ...mapActions([
       'setFSPlayer',
-      'getSongDetail',
-      'getSongLyric',
+      'setSongDetail',
+      'setSongLyric',
       'setPlayState',
       'setCurIndex'
     ]),
     playMusic(id, index) {
-      this.getSongDetail([id]);
-      this.getSongLyric(id);
+      this.setSongDetail([id]);
+      this.setSongLyric(id);
       this.setFSPlayer(true);
       this.setPlayState(true);
       this.setCurIndex(0);
@@ -65,11 +64,11 @@ export default {
         return item.id;
       });
       //获取歌单内的所有歌曲信息
-      this.getSongDetail(ids);
+      this.setSongDetail(ids);
       // 默认播放第0首
       this.setCurIndex(0);
       //获取当前播放歌曲的歌词
-      this.getSongLyric(ids[this.curIndex]);
+      this.setSongLyric(ids[this.curIndex]);
     }
   }
 };
@@ -77,7 +76,7 @@ export default {
 
 <style scoped lang="scss">
 .play-list {
-  height: 100%;
+  height: 1200px;
   ul {
     li:first-child {
       @include bg_color_sub_theme();
@@ -124,16 +123,19 @@ export default {
       }
     }
     li:last-child {
-        border: none;
-        padding-bottom: 60%;
-        position: relative;
-        left: 2%;
-        &::before {
-          content: '主人，没有更多了噢 !';
-          color: #999;
-          @include font_size($font_medium_s);
-        }
+      // 避免迷你播放器遮挡最后一首歌曲列表目，所以预留部分空间出来
+      border: none;
+      padding-bottom: $mini_player_height + 40px;
+      position: relative;
+      &::before {
+        position: absolute;
+        bottom: $mini_player_height - 20px;
+        left: 20px;
+        content: '主人，没有更多了噢 !';
+        color: #999;
+        @include font_size($font_medium_s);
       }
+    }
   }
 }
 </style>
