@@ -223,7 +223,7 @@ export default {
     }
   }
   .inner-list {
-    height: 100%;
+    height: calc(100% - 80px);
     .s-list {
       border-top: 1px solid #eee;
       padding-top: 22px;
