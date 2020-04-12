@@ -28,19 +28,41 @@ export default {
     ...mapGetters(['historySongs', 'likeSongs'])
   },
   methods: {
-     ...mapActions([
-      'setLikeSongs',
-      'setHistorySongs'
-    ]),
+    ...mapActions(['setLikeSongs', 'setHistorySongs']),
     clearAllList() {
-      this.songsData = [];
       if (this.switchNum === 0) {
-        removeLocalStorage('likedList');
-        this.setLikeSongs({empty: true})
+        this.$dialog({
+          message: '确定清空喜欢列表？',
+          type: 'confirm'
+        }).then(
+          val => {
+            if (val) {
+              removeLocalStorage('likedList');
+              this.setLikeSongs({ empty: true });
+              this.songsData = [];
+            }
+          },
+          err => {
+            console.log(err);
+          }
+        );
       }
       if (this.switchNum === 1) {
-        this.setHistorySongs({empty: true})
-        removeLocalStorage('historyList');
+        this.$dialog({
+          message: '确定清空播放历史？',
+          type: 'confirm'
+        }).then(
+          val => {
+            if (val) {
+              this.setHistorySongs({ empty: true });
+              removeLocalStorage('historyList');
+              this.songsData = [];
+            }
+          },
+          err => {
+            console.log(err);
+          }
+        );
       }
     },
     switchList(num) {

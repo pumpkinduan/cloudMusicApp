@@ -4,7 +4,7 @@
     <div class="wrap_song" v-if="songsData.length > 0">
       <div
         :class="{'song_item': true, 'forbid_music': item.allowed && !item.allowed.success}"
-        @click="playMusic(item.id, index, item.allowed)"
+        @click.stop="playMusic(item.id, index, item.allowed)"
         v-for="(item, index) in songsData"
         :key="item.id"
       >
@@ -48,7 +48,7 @@ export default {
     ]),
     playMusic(id, index, allowed) {
       if (allowed && !allowed.success) {
-        this.$showDialog(allowed.message);
+        this.$dialog({duration: 100, message: allowed.message, type: 'alert', textAlign: 'center'});
         return;
       }
       if (this.curSong.id !== id) {

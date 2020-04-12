@@ -86,6 +86,7 @@ export default {
   watch: {
     hotList() {
       this.$nextTick(() => {
+        if (!this.$refs.s_history) return;
         this.$refs.s_history.style.top =
           this.$refs.s_hots.offsetHeight +
           this.$refs.s_box.offsetHeight +
@@ -100,15 +101,17 @@ export default {
     playlists(newVal) {
       if (this.s_words !== '') {
         this.$nextTick(() => {
-          this.$refs.scrollView.refresh();
+          this.$refs.scrollView && this.$refs.scrollView.refresh();
         });
       }
     },
     searchHistory(newVal) {
-      this.$nextTick(() => {
-        this.$refs.scrollView.refresh();
-      });
-      setLocalStorage('searchHistory', this.searchHistory);
+      if (newVal && newVal.length > 0) {
+        this.$nextTick(() => {
+          this.$refs.scrollView && this.$refs.scrollView.refresh();
+        });
+        setLocalStorage('searchHistory', this.searchHistory);
+      }
     }
   },
   created() {
@@ -127,8 +130,18 @@ export default {
       this.searchHistory.splice(index, 1);
     },
     clearAllHistory() {
-      alert('确定清空所有搜索记录？');
-      this.searchHistory = [];
+      this.$dialog({
+        message: '确定清空所有搜索记录？',
+        type: 'confirm'
+      }).then(
+        val => {
+          if (val) this.searchHistory = [];
+          console.log(val);
+        },
+        err => {
+          console.log(err);
+        }
+      );
     },
     searchSuggest() {
       if (!this.s_words) return;

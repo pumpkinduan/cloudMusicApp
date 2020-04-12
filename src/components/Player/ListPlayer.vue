@@ -101,7 +101,17 @@ export default {
       this.delSong(index);
     },
     clearSongList() {
-      this.delSong();
+      this.$dialog({
+        message: '确定清空所有歌曲？',
+        type: 'confirm'
+      }).then(
+        val => {
+          if (val) this.delSong()
+        },
+        err => {
+          // console.log(err);
+        }
+      );
     },
     playMS(index, id) {
       this.setCurIndex(index);

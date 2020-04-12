@@ -1,27 +1,59 @@
 <template>
   <transition name="fade">
-    <div class="container" v-show="isShow">
-        <div class="dialog">
-          <p class="text">{{message}}</p>
-          <p class="btn" @click.stop="hidden">{{btnText}}</p>
+    <div class="container" v-show="visible">
+      <div class="dialog" :style="{textAlign: textAlign, animationDuration: duration/1000 + 's'}">
+        <p class="title">{{title}}</p>
+        <p class="text">{{message}}</p>
+        <p v-if="type==='alert'" class="alert-btn" @click="visible = false">{{alertBtnText}}</p>
+        <div v-if="type==='confirm'" class="dialog-btns">
+          <span @click.stop="clickCancle">取消</span>
+          <i class="line">|</i>
+          <span @click.stop="clickConfirm">确定</span>
         </div>
+      </div>
     </div>
   </transition>
 </template>
 
 <script>
+/**
+ * @params
+ * type: 弹出框的类型; 'alert'为普通提示框;'confirm'为确认提示框
+ * alertBtnText: type为'alert'的提示框下方的按钮文字
+ * duration(整数 单位ms): 提示框动画的执行时间
+ * title：提示框顶部标题
+ * textAlign：提示框文本水平对齐方式=> 'left' 'right' 'center'三个值
+ * visible(布尔类型): 提示框的显示与隐藏，true 或 false
+ */
 export default {
   name: 'Dialog',
   data() {
     return {
-      isShow: false,
-      message: '网络请求超时，请重新刷新页面!',
-      btnText: '好的'
+      visible: false,
+      title: '温馨提示',
+      textAlign: 'left',
+      alertBtnText: '好的',
+      type: 'alert',
+      duration: 200,
+      resolve: null,
+      reject: null
     };
   },
   methods: {
-    hidden() {
-      this.isShow = false;
+    popupDialog() {
+      this.visible = true;
+      return new Promise((resolve, reject) => {
+        this.resolve = resolve;
+        this.reject = reject
+      })
+    },
+    clickCancle() {
+      this.visible = false;
+      this.reject('取消');
+    },
+    clickConfirm() {
+       this.visible = false;
+       this.resolve('确定');
     }
   }
 };
@@ -48,22 +80,41 @@ export default {
   align-items: center;
   justify-content: center;
   .dialog {
-    width: 50%;
+    width: 88%;
+    box-sizing: border-box;
     border-radius: 15px;
     background-color: #fff;
-    padding: 20px 33px;
-    text-align: center;
-    animation: appear .2s linear .1s;
+    padding: 30px 40px;
+    animation: appear 0.2s linear 0.1s;
     animation-fill-mode: forwards;
     transform: scale(0);
-    .text {
+    .title {
+      color: #507daf;
+      @include font_size($font_small);
+    }
+     .text {
       color: #555;
-      @include font_size($font_medium_s);
+      @include font_size($font_medium);
       padding: 30px 0;
       border-bottom: 1px solid #ddd;
     }
-    .btn {
-      color: #507daf;
+    .dialog-btns {
+      padding-top: 22px;
+      text-align: right;
+      span {
+        @include font_color();
+        font-weight: bold;
+        padding: 5px;
+      }
+      .line {
+        visibility: hidden;
+        display: inline-block;
+        margin: 0 30px;
+      }
+    }
+
+    .alert-btn {
+      @include font_color();
       padding: 12px 0;
       font-weight: bold;
       @include font_size($font_medium);
