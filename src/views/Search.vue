@@ -121,7 +121,6 @@ export default {
         this.hotList = data.result.hots;
       },
       err => {
-        // console.log(err);
       }
     );
   },
@@ -136,10 +135,8 @@ export default {
       }).then(
         val => {
           if (val) this.searchHistory = [];
-          console.log(val);
         },
         err => {
-          console.log(err);
         }
       );
     },
@@ -150,7 +147,6 @@ export default {
           this.sugList = data.result.allMatch;
         },
         err => {
-          // console.log(err);
         }
       );
     },
@@ -193,7 +189,6 @@ export default {
           });
         },
         err => {
-          // console.log(err);
         }
       );
     }

@@ -30,13 +30,13 @@ a {
 img { vertical-align: top; }
 ul li { list-style: none; }
 h1 {
-    @include font_size(24Px);
+    @include font_size($font_icon_size1);
 }
 h2 {
-    @include font_size(21Px);
+    @include font_size($font_super_large);
 }
 h3 {
-    @include font_size(18Px);
+    @include font_size($font_large);
 }
 h1, h2, h3, h4, h4, p, ul, li {
     margin: 0;
@@ -78,6 +78,7 @@ span {
     z-index: -1;
 }
 h2.title {
+    margin-left: 10px;
     padding: 20px 0;
     padding-left: 8px;
     position: relative;
@@ -87,7 +88,7 @@ h2.title {
       display: inline-block;
       width: 4px;
       height: 36px;
-      background-color: $theme_bright;
+      @include bg_color_theme();
       top: 50%;
       transform: translate3d(0, -50%, 0);
       left: 0;

@@ -2,32 +2,34 @@
 <html lang="en">
 
 <head>
-  <meta charset="utf-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <link rel="icon" href="favicon.ico">
-  <title>音乐</title>
-  <link rel="stylesheet" href="https://at.alicdn.com/t/font_1715908_ho5aaoxm3ks.css">
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <link rel="icon" href="favicon.ico">
+    <title>音乐</title>
+    <link rel="stylesheet" href="https://at.alicdn.com/t/font_1715908_ho5aaoxm3ks.css">
 </head>
 
 <body>
-  <noscript>
-    <strong>We're sorry but <%= htmlWebpackPlugin.options.title %> doesn't work properly without JavaScript enabled.
-      Please enable it to continue.</strong>
-  </noscript>
-  <div id="app"></div>
+    <noscript>
+        <strong>We're sorry but <%= htmlWebpackPlugin.options.title %> doesn't work properly without JavaScript enabled.
+            Please enable it to continue.</strong>
+    </noscript>
+    <div id="app"></div>
 </body>
 <script>
-  let meta = document.createElement('meta');
-  // CSS像素的缩放比例
-  let scale = 1 / window.devicePixelRatio || 1;
-  meta.setAttribute('name', 'viewport');
-  meta.setAttribute('content', `width=device-width,initial-scale=${scale}, user-scalable=no, maximum-scale=${scale}, minimum-scale=${scale}`);
-  document.head.append(meta);
-  window.addEventListener('DOMContentLoaded', function () {
-    document.documentElement.style.fontSize = Math.floor(document.documentElement.clientWidth / 7.5) + 'px';
-    document.documentElement.setAttribute('data-dpr', window.devicePixelRatio.toFixed(2) || 1);
-  })
-  document.documentElement.setAttribute('data-theme', 'theme');
+    let meta = document.createElement('meta');
+    // CSS像素的缩放比例
+    let scale = 1 / window.devicePixelRatio || 1;
+    meta.setAttribute('name', 'viewport');
+    meta.setAttribute('content', `width=device-width,initial-scale=${scale}, maximum-scale=${scale}, minimum-scale=${scale}`);
+    document.head.append(meta);
+    window.addEventListener('DOMContentLoaded', function () {
+        let c_width = document.documentElement.clientWidth;
+        document.documentElement.style.fontSize = Math.floor(c_width / 7.5) + 'px';
+
+        document.documentElement.setAttribute('data-dpr', window.devicePixelRatio.toFixed(1) * 10 || 10);
+    })
+    document.documentElement.setAttribute('data-theme', 'theme');
 </script>
 
 </html>

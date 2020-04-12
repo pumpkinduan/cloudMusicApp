@@ -35,6 +35,7 @@ export default {
       alertBtnText: '好的',
       type: 'alert',
       duration: 200,
+      message: '可能网络问题，请重新刷新',
       resolve: null,
       reject: null
     };

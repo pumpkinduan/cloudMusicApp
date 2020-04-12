@@ -1,15 +1,21 @@
 // 根据dpr计算font-size, 在移动端开发中，让字体大小不随屏幕的变化而变化
 @mixin font_dpr($font-size) {
     font-size: $font-size;
-    [data-dpr="1.50"] & {
+    [data-dpr="15"] & {
         font-size: $font-size * 1.5;
     }
-    [data-dpr="2.00"] & {
-        font-size: $font-size * 2;
-    }
-    [data-dpr="3.00"] & {
-        font-size: $font-size * 3;
-    }
+    @for $i from 20 through 30 {
+        //为了适配不同机型带来的dpr的不同
+        [data-dpr='#{$i}'] & {
+            font-size: $font-size * ($i / 10);
+        }
+    } 
+    // [data-dpr="2.0"] & {
+    //     font-size: $font-size * 2;
+    // }
+    // [data-dpr="3.0"] & {
+    //     font-size: $font-size * 3;
+    // }
 }
 // 设置字体大小
 @mixin font_size($font-size) {
@@ -57,13 +63,13 @@
     background-size: cover;
     background-repeat: no-repeat;
     background-position: center center;
-    [data-dpr="1.50"] & {
+    [data-dpr^="1"] & {
         background-image: url($url + "_163.png");
     }
-    [data-dpr="2.00"] & {
+    [data-dpr^="2"] & {
         background-image: url($url + "_163@2x.png");
     }
-    [data-dpr="3.00"] & {
+    [data-dpr^="3"] & {
         background-image: url($url + "_163@3x.png");
     }
 }

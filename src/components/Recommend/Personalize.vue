@@ -46,7 +46,7 @@ export default {
     flex-wrap: wrap;
     li {
       width: 30%;
-      padding-bottom: 10px;
+      padding-top: 10px;
       a {
         width: 100%;
         .remd_img {

@@ -76,12 +76,10 @@ export default {
 
 <style scoped lang="scss">
 .play-list {
-  height: 1200px;
+  height: calc(100% - 360px);
   ul {
     li:first-child {
       @include bg_color_sub_theme();
-      border-top-left-radius: 30px;
-      border-top-right-radius: 30px;
       padding: 30px 0 10px 18px;
       display: flex;
       align-items: center;

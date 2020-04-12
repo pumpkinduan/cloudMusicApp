@@ -1,7 +1,7 @@
 const path = require("path");
 module.exports = {
+  // outputDir: 'public',
   devServer: {
-    open: true,
     proxy: {
       "/api": {
         target: "http://localhost:3000",

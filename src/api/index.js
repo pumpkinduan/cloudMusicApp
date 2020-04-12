@@ -22,7 +22,7 @@ export const getHotSingers = () => {
 };
 export const getCatSingers = letter => {
   return new Promise((resolve, reject) => {
-    server.get("/artist/list?cat=5001&limit=10", { initial: letter }).then(
+    server.get("/artist/list?cat=5001&limit=6", { initial: letter }).then(
       res => {
         resolve(res.artists);
       },

@@ -74,6 +74,7 @@ export default {
   z-index: 2;
 }
 .rank-wrapper {
+  @include bg_color_sub_theme();
   position: fixed;
   top: 180px;
   bottom: 0;

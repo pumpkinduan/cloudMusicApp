@@ -52,7 +52,7 @@ export default {
       type: String,
       default: ''
     }
-  },
+  }
 };
 </script>
 
@@ -61,11 +61,13 @@ export default {
   height: 360px;
   box-sizing: border-box;
   padding: 60px 20px;
+  display: flex;
   position: relative;
   .blur_bg {
     @include blur_bgc();
   }
   .wrap_head {
+    align-items: center;
     display: flex;
     .s-list-header {
       margin-bottom: 20px;
@@ -83,7 +85,9 @@ export default {
       }
       .briefDesc {
         color: #f1f1f1;
-         @include font_size($font_small);
+        @include font_size($font_small);
+        @include clamp(3);
+        line-height: 34px;
       }
       img {
         width: 60px;

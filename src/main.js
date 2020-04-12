@@ -6,6 +6,8 @@ import "./assets/css/base.scss";
 import VueLazyLoad from "vue-lazyload";
 import Loading from "./plugins/loading/index.js";
 import Dialog from "./plugins/dialog/index.js";
+import VConsole from 'vconsole'
+new VConsole();
 Vue.directive("debounce", {
   inserted: (el, binding) => {
     let timer = null;

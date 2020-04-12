@@ -5,9 +5,9 @@
       <TabBar />
     </div>
     <transition>
-      <keep-alive :include="['Singer','Rank','Search']">
+      <!-- <keep-alive> -->
         <router-view />
-      </keep-alive>
+      <!-- </keep-alive> -->
     </transition>
     <Player />
   </div>

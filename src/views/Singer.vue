@@ -127,8 +127,8 @@ export default {
     dataLists(newVal) {
       // 获取每一组歌手距离顶部的距离，用于快捷导航
       this.$nextTick(() => {
-        this.minOffsetY = this.$refs.nav.offsetTop + 30;
-        this.maxOffsetY = this.minOffsetY + this.$refs.nav.offsetHeight + 30;
+        this.minOffsetY = this.$refs.nav.offsetTop;
+        this.maxOffsetY = this.minOffsetY + this.$refs.nav.offsetHeight;
         this.$refs.singer_group.forEach(val => {
           this.offsetTops.push(val.offsetTop);
         });
@@ -145,7 +145,6 @@ export default {
         let nextTitleTop = this.offsetTops[this.curIndex + 1];
         let diff = nextTitleTop + newVal;
         let resultY = 0;
-        // console.log(diff, fixedTitleH, diff - fixedTitleH);
         if (diff <= fixedTitleH && diff >= 0) {
           resultY = diff - fixedTitleH;
         } else {
@@ -166,7 +165,7 @@ export default {
   left: 0;
   right: 0;
   bottom: 0;
-  z-index: 3;
+  z-index: 1;
   @include bg_color_sub_theme();
   .fixed-title {
     position: absolute;
@@ -234,6 +233,9 @@ export default {
         .singer-item {
           padding: 15px 0;
           border-bottom: 1px solid #ddd;
+          a {
+            width: 100%;
+          }
           &:last-child {
             border-bottom: none;
           }
