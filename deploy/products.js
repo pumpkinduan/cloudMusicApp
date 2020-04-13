@@ -55,10 +55,10 @@ const SERVER_LIST = [
         id: 1,
         name: 'A-生产环境',
         // domain: 'www.prod.com',// 域名
-        host: '47.96.251.63',// ip
+        host: '',// ip
         port: 22,// 端口
         username: 'root', // 登录服务器的账号
-        password: 'd22pum2143_',// 登录服务器的密码
+        password: '',// 登录服务器的密码
         path: '/home/cloudMusic/public'// 发布至静态服务器的项目路径
     },
 
