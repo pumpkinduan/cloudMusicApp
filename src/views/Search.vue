@@ -6,7 +6,7 @@
       <i @click="s_words = ''" class="iconfont s-icon iconshanchu"></i>
     </div>
     <div class="inner-list" v-show="s_words">
-      <ScrollView>
+      <ScrollView ref="scrollView1">
         <ul class="s-list" v-if="playlists.length === 0 && sugList.length > 0">
           <li class="s-item s-keyword" @click="searchList(s_words)">搜索{{s_words}}</li>
           <li
@@ -40,7 +40,7 @@
         <h4 class="fl">搜索记录 (共{{searchHistory.length}}条)</h4>
         <i class="iconfont s-icon fr iconshanchu1" @click="clearAllHistory"></i>
       </div>
-      <ScrollView ref="scrollView">
+      <ScrollView ref="scrollView2">
         <ul class="h-wrap">
           <li
             @click="searchList(val)"
@@ -101,14 +101,14 @@ export default {
     playlists(newVal) {
       if (this.s_words !== '') {
         this.$nextTick(() => {
-          this.$refs.scrollView && this.$refs.scrollView.refresh();
+          this.$refs.scrollView1 && this.$refs.scrollView1.refresh();
         });
       }
     },
     searchHistory(newVal) {
       if (newVal && newVal.length > 0) {
         this.$nextTick(() => {
-          this.$refs.scrollView && this.$refs.scrollView.refresh();
+          this.$refs.scrollView2 && this.$refs.scrollView2.refresh();
         });
         setLocalStorage('searchHistory', this.searchHistory);
       }

@@ -1,37 +1,39 @@
 <template>
   <div class="singer">
-    <nav ref="nav">
-      <div
-        @touchstart.prevent="touchstart"
-        @touchmove.stop.prevent="touchmove"
-        :data-index="index"
-        :class="['letter', curIndex === index ? 'active': '']"
-        v-for="(val, index) in dataKeys"
-        :key="index"
-      >{{val}}</div>
-    </nav>
-    <ScrollView ref="scrollView">
-      <ul class="singer-wrap">
-        <li
-          ref="singer_group"
-          class="singer-group"
-          v-for="(group, index) in dataLists"
+    <div class="singer-inner">
+      <nav ref="nav">
+        <div
+          @touchstart.prevent="touchstart"
+          @touchmove.prevent="touchmove"
+          :data-index="index"
+          :class="['letter', curIndex === index ? 'active': '']"
+          v-for="(val, index) in dataKeys"
           :key="index"
-        >
-          <h3 class="title">{{dataKeys[index]}}</h3>
-          <section>
-            <div class="singer-item" v-for="item in group" :key="item.id">
-              <router-link :to="{name: 'Detail', params: {id: item.id, type: 'singer'}}">
-                <img v-lazy="item.picUrl" alt />
-                <span>{{item.name}}</span>
-              </router-link>
-            </div>
-          </section>
-        </li>
-      </ul>
-    </ScrollView>
-    <div ref="fixedTitle" class="fixed-title" v-show="fixedTitle !== ''">{{fixedTitle}}</div>
-    <transition appear>
+        >{{val}}</div>
+      </nav>
+      <ScrollView ref="scrollView">
+        <ul class="singer-wrap">
+          <li
+            ref="singer_group"
+            class="singer-group"
+            v-for="(group, index) in dataLists"
+            :key="index"
+          >
+            <h3 class="title">{{dataKeys[index]}}</h3>
+            <section>
+              <div class="singer-item" v-for="item in group" :key="item.id">
+                <router-link :to="{name: 'Detail', params: {id: item.id, type: 'singer'}}">
+                  <img v-lazy="item.picUrl" alt />
+                  <span>{{item.name}}</span>
+                </router-link>
+              </div>
+            </section>
+          </li>
+        </ul>
+      </ScrollView>
+      <div ref="fixedTitle" class="fixed-title" v-show="fixedTitle !== ''">{{fixedTitle}}</div>
+    </div>
+    <transition>
       <router-view></router-view>
     </transition>
   </div>
@@ -159,92 +161,96 @@ export default {
 
 <style scoped lang="scss">
 .singer {
-  position: fixed;
-  top: 180px;
-  padding-right: 90px;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  z-index: 1;
-  @include bg_color_sub_theme();
-  .fixed-title {
-    position: absolute;
-    top: 0;
-    right: 100px;
-    @include font_size($font_super_large);
-    font-weight: bold;
-    padding: 20px;
-    left: 10px;
-    @include bg_color_sub_theme();
-    z-index: 0;
-    &::before {
-      content: '';
-      position: absolute;
-      display: inline-block;
-      width: 15px;
-      height: 15px;
-      border-radius: 50%;
-      @include bg_color_theme();
-      top: 50%;
-      transform: translate3d(0, -50%, 0);
-      left: 0;
-    }
-  }
-  nav {
+  width: 100vw;
+  height: 100vh;
+  .singer-inner {
     position: fixed;
-    top: 15%;
-    right: 20px;
+    top: 180px;
+    padding-right: 90px;
+    left: 0;
+    right: 0;
+    bottom: 0;
     z-index: 0;
-    .letter {
-      transition: all 0.3s;
-      text-align: center;
-      padding: 4px 0;
-      color: #777;
-      @include font_size($font_medium);
-      &.active {
-        @include font_color();
-        @include font_size($font_super_large);
-        font-weight: bold;
+    @include bg_color_sub_theme();
+    .fixed-title {
+      position: absolute;
+      top: -2px;
+      right: 100px;
+      @include font_size($font_super_large);
+      font-weight: bold;
+      padding: 20px;
+      left: 10px;
+      @include bg_color_sub_theme();
+      z-index: 0;
+      &::before {
+        content: '';
+        position: absolute;
+        display: inline-block;
+        width: 15px;
+        height: 15px;
+        border-radius: 50%;
+        @include bg_color_theme();
+        top: 50%;
+        transform: translate3d(0, -50%, 0);
+        left: 0;
       }
     }
-  }
-  .singer-wrap {
-    padding: 0 10px;
-    .singer-group {
-      .title {
-        padding: 20px;
-        position: relative;
-        @include font_size($font_super_large);
-        font-weight: bold;
-        &::before {
-          content: '';
-          position: absolute;
-          display: inline-block;
-          width: 15px;
-          height: 15px;
-          border-radius: 50%;
-          @include bg_color_theme();
-          top: 50%;
-          transform: translate3d(0, -50%, 0);
-          left: 0;
+    nav {
+      position: fixed;
+      top: 15%;
+      right: 20px;
+      z-index: 0;
+      .letter {
+        transition: all 0.3s;
+        text-align: center;
+        padding: 4px 0;
+        color: #777;
+        @include font_size($font_medium);
+        &.active {
+          @include font_color();
+          @include font_size($font_super_large);
+          font-weight: bold;
         }
       }
-      section {
-        .singer-item {
-          padding: 15px 0;
-          border-bottom: 1px solid #ddd;
-          a {
-            width: 100%;
-          }
-          &:last-child {
-            border-bottom: none;
-          }
-          img {
-            margin-right: 20px;
-            width: 120px;
-            vertical-align: middle;
-            height: 120px;
+    }
+    .singer-wrap {
+      padding: 0 10px;
+      .singer-group {
+        .title {
+          padding: 20px;
+          position: relative;
+          @include font_size($font_super_large);
+          font-weight: bold;
+          &::before {
+            content: '';
+            position: absolute;
+            display: inline-block;
+            width: 15px;
+            height: 15px;
             border-radius: 50%;
+            @include bg_color_theme();
+            top: 50%;
+            transform: translate3d(0, -50%, 0);
+            left: 0;
+          }
+        }
+        section {
+          .singer-item {
+            padding: 15px 0;
+            border-bottom: 1px solid #ddd;
+            a {
+              width: 100%;
+            }
+            &:last-child {
+              border-bottom: none;
+            }
+            img {
+              margin-right: 20px;
+              width: 120px;
+              vertical-align: middle;
+              height: 120px;
+              border-radius: 50%;
+            }
           }
         }
       }

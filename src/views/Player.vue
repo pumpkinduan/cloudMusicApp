@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="player">
     <FullScreenPlayer :audio="audio" />
     <MiniPlayer />
     <ListPlayer ref="listPlayer" />
@@ -84,7 +84,10 @@ export default {
         //  切换歌曲时，重新获取当前播放歌曲的歌词
         this.setSongLyric(this.curSong['id']);
         // 添加歌曲到播放历史列表
-        this.setHistorySongs({songs: [this.curSong]});
+        let i = this.historySongs.findIndex(item => {
+          return item.id === this.curSong.id;
+        })
+        if (i === -1) this.setHistorySongs({songs: [this.curSong]});
       };
     },
     likeSongs(newVal) {
@@ -125,5 +128,3 @@ export default {
 };
 </script>
 
-<style scoped lang="scss">
-</style>

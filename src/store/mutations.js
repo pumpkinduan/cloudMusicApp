@@ -78,12 +78,12 @@ export default {
   [SET_TOTAL_TIME](state, time) {
     state.totalTime = time;
   },
-  [SET_Like_SONGS](state, { flag, songs, empty }) {
+  [SET_Like_SONGS](state, { liked, songs, empty }) {
     if (empty) {
       state.likeSongs = [];
       return;
     } //清空
-    if (flag) {
+    if (liked) {
       state.likeSongs.push(...songs);
     } else {
       if (songs.length === 0) return;

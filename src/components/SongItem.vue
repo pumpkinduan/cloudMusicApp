@@ -4,7 +4,7 @@
     <div class="wrap_song" v-if="songsData.length > 0">
       <div
         :class="{'song_item': true, 'forbid_music': item.allowed && !item.allowed.success}"
-        @click.stop="playMusic(item.id, index, item.allowed)"
+        @click="playMusic(item.id, index, item.allowed)"
         v-for="(item, index) in songsData"
         :key="item.id"
       >
@@ -48,16 +48,21 @@ export default {
     ]),
     playMusic(id, index, allowed) {
       if (allowed && !allowed.success) {
-        this.$dialog({duration: 100, message: allowed.message, type: 'alert', textAlign: 'center'});
+        this.$dialog({
+          duration: 100,
+          message: allowed.message,
+          type: 'alert',
+          textAlign: 'center'
+        });
         return;
       }
       if (this.curSong.id !== id) {
         // 获取歌词相关信息，保存到store中
-       this.setSongDetail([id]);
+        this.setSongDetail([id]);
       }
-      this.setFSPlayer(true);
       //设置播放索引为0, 因为第0首为将要播放的歌曲
       this.setCurIndex(0);
+      this.setFSPlayer(true);
     }
   }
 };

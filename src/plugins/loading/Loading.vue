@@ -1,10 +1,10 @@
 <template>
-  <div class="container" v-show="isShow">
+  <div class="container" v-show="isShow" :style="{background: maskBgc}">
     <div class="container-inner">
       <div class="loading">
-        <span class="loading-dot loading-move-right"></span>
-        <span class="loading-dot loading-scale"></span>
-        <span class="loading-dot loading-move-left"></span>
+        <span class="loading-dot loading-move-right" :style="{background: loadingDotBgc}"></span>
+        <span class="loading-dot loading-scale" :style="{background: loadingDotBgc}"></span>
+        <span class="loading-dot loading-move-left" :style="{background: loadingDotBgc}"></span>
       </div>
     </div>
   </div>
@@ -15,7 +15,9 @@ export default {
   name: 'Loading',
   data() {
     return {
-      isShow: false
+      isShow: false,
+      maskBgc: 'rgba(0, 0, 0, 0.45)',
+      loadingDotBgc: '#eee'
     };
   }
 };
@@ -28,7 +30,6 @@ export default {
   left: 0;
   right: 0;
   bottom: 0;
-  background: rgba(0, 0, 0, 0.45);
   z-index: 999;
   .container-inner {
     width: 100%;
@@ -42,7 +43,6 @@ export default {
         width: 40px;
         height: 40px;
         border-radius: 50%;
-        background: #eee;
         margin: 0 10px;
         animation: 0.2s linear infinite alternate;
       }

@@ -69,9 +69,9 @@ export default {
       let active = document.querySelector('.lyric p.active');
       let curLyricTop = active && active.offsetTop;
       let vh_lyric = Math.floor(this.$refs.wrap_lyric.offsetHeight);
-      let scrollY = Math.floor(Math.abs(this.$refs.scrollView.iScroll.y));
+      let scrollY = Math.floor(Math.abs(this.$refs.scrollView.bscroll.y));
       let maxScrollY = Math.floor(
-        Math.abs(this.$refs.scrollView.iScroll.maxScrollY)
+        Math.abs(this.$refs.scrollView.bscroll.maxScrollY)
       );
       if (curLyricTop > vh_lyric / 2 && maxScrollY > scrollY) {
         this.$refs.scrollView.scrollTo(0, vh_lyric / 2 - curLyricTop, 200);

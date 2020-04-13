@@ -1,7 +1,7 @@
 import axios from "axios";
 import Vue from "vue";
 //进行全局的默认配置
-axios.defaults.baseURL = process.env.NODE_ENV === "production" ? "/" : "/api";
+axios.defaults.baseURL = process.env.NODE_ENV === "production" ? "http://pumpkinduan.cn:3000" : "/api";
 axios.defaults.timeout = 10000;
 // 添加请求拦截器
 let reqCount = 0; //记录请求次数，处理并发请求
@@ -37,7 +37,7 @@ axios.interceptors.response.use(
       resErr = error.response.data;
     }
     if (error.message.includes("timeout")) {
-      Vue.$dialog({textAllign: 'center'});
+      Vue.$dialog({textAlign: 'center'});
     }
     return Promise.reject(resErr);
   }

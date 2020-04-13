@@ -11,17 +11,17 @@
 </template>
 
 <script>
-import IScroll from 'iscroll/build/iscroll-probe';
+// import IScroll from 'iscroll/build/iscroll-probe';
+import BScroll from 'better-scroll';
 
 export default {
   name: 'ScrollView',
   mounted() {
-    this.iScroll = new IScroll(this.$refs.wrapper, {
+    this.bscroll = new BScroll(this.$refs.wrapper, {
       mouseWheel: true,
       scrollbars: false,
       probeType: 3,
       scrollbars: true,
-      fadeScrollbars: true,
       click: true,
       // 解决拖拽卡顿问题
       scrollX: false,
@@ -58,19 +58,19 @@ export default {
   methods: {
     // 提供一个监听滚动距离的方法给外界使用
     scrolling(fn) {
-      this.iScroll.on('scroll', function() {
+      this.bscroll.on('scroll', function() {
         fn(this.y);
       });
     },
     refresh() {
       this.$nextTick(() => {
         setTimeout(() => {
-          this.iScroll.refresh();
-        }, 100);
+          this.bscroll.refresh();
+        }, 66);
       });
     },
     scrollTo(x, y, time) {
-      this.iScroll.scrollTo(x, y, time);
+      this.bscroll.scrollTo(x, y, time);
     }
   }
 };

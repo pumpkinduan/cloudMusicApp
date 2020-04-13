@@ -6,8 +6,7 @@ import "./assets/css/base.scss";
 import VueLazyLoad from "vue-lazyload";
 import Loading from "./plugins/loading/index.js";
 import Dialog from "./plugins/dialog/index.js";
-import VConsole from 'vconsole'
-new VConsole();
+
 Vue.directive("debounce", {
   inserted: (el, binding) => {
     let timer = null;
@@ -25,8 +24,8 @@ Vue.directive("debounce", {
     );
   }
 });
-Vue.use(Loading)
-Vue.use(Dialog)
+Vue.use(Loading, {maskBgc: '#fff', loadingDotBgc: 'rgba(0,0,0,0.6)'});
+Vue.use(Dialog);
 Vue.use(VueLazyLoad, {
   preLoad: 1.3,
   error: require("./assets/images/error.jpg"),
@@ -37,5 +36,5 @@ Vue.config.productionTip = false;
 new Vue({
   router,
   store,
-  render: h => h(App),
+  render: h => h(App)
 }).$mount("#app");

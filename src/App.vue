@@ -4,11 +4,9 @@
       <main-header />
       <TabBar />
     </div>
-    <transition>
-      <!-- <keep-alive> -->
-        <router-view />
-      <!-- </keep-alive> -->
-    </transition>
+    <keep-alive :include="['Search', 'Rank', 'Singer']">
+      <router-view />
+    </keep-alive>
     <Player />
   </div>
 </template>

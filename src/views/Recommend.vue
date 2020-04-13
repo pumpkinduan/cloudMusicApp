@@ -39,16 +39,10 @@ export default {
       .then(data => {
         this.banners = data.banners;
       })
-      .catch(err => {
-        console.log(err);
-      }),
       getRemdSongList()
         .then(data => {
           this.remd_songs = data.result;
         })
-        .catch(err => {
-          console.log(err);
-        }),
       getNewestSong()
         .then(data => {
           data.result.forEach((item, index) => {
@@ -68,9 +62,6 @@ export default {
             this.newestSongs.push(resObj);
           });
         })
-        .catch(err => {
-          console.log(err);
-        });
   }
 };
 </script>

@@ -20,7 +20,9 @@ import {
 } from "../api/index";
 export default {
   setFSPlayer({ commit }, bool) {
-    commit("SET_FS_PLAYER", bool);
+    setTimeout(() => {
+      commit("SET_FS_PLAYER", bool);
+    }, 333);
   },
   setMiniPlayer({ commit }, bool) {
     commit("SET_MINI_PLAYER", bool);
@@ -90,8 +92,8 @@ export default {
   setTotalTime({ commit }, time) {
     commit("SET_TOTAL_TIME", time);
   },
-  setLikeSongs({ commit }, { flag, songs, empty }) {
-    commit("SET_Like_SONGS", { flag, songs, empty });
+  setLikeSongs({ commit }, { liked, songs, empty }) {
+    commit("SET_Like_SONGS", { liked, songs, empty });
   },
   setHistorySongs({ commit }, { songs, empty }) {
     commit("SET_HISTORY_SONGS", { songs, empty });

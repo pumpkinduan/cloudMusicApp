@@ -100,14 +100,19 @@ export default {
     addLike() {
       if (!this.isLiked) {
         // 若是已经喜欢了该歌曲，再次点击则取消喜欢
-        this.setLikeSongs({
-          songs: [this.curSong],
-          flag: true
+        let i = this.likeSongs.findIndex(item => {
+          return item.id === this.curSong.id;
         });
+        if (i === -1) {//避免重复添加同一首歌曲
+          this.setLikeSongs({
+            songs: [this.curSong],
+            liked: true
+          });
+        }
       } else {
         this.setLikeSongs({
           songs: [this.curSong],
-          flag: false
+          liked: false
         });
       }
       this.isLiked = !this.isLiked;

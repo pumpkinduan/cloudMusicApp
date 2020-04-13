@@ -10,6 +10,12 @@ export default {
     document.body.appendChild(oDiv);
     //手动挂载Dialog实例
     instance.$mount(oDiv);
+    if (options.title) {instance.title = options.title;}
+    if (options.message) {instance.message = options.message;}
+    if (options.alertBtnText) {instance.alertBtnText = options.alertBtnText;}
+    if (options.type) {instance.type = options.type;}
+    if (options.duration) {instance.duration = options.duration;}
+    if (options.textAlign) {instance.textAlign = options.textAlign;}
     //添加实例方法
     Vue.$dialog = Vue.prototype.$dialog = (opt={}) => {
       // 将全局配置与自定义配置选项进行合并，自定义配置会覆盖全局配置

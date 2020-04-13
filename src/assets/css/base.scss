@@ -47,22 +47,18 @@ span {
     display: inline-block;
 }
 .v-enter {
-    transform: translateX(100%);
     opacity: 0;
 }
 .v-enter-to {
-    transform: translateX(0%);
     opacity: 1;
 }
 .v-enter-active {
-    transition: all .7s;
+    transition: opacity .7s;
 }
 .v-leave {
-    transform: translateX(0%);
     opacity: 1;
 }
 .v-leave-to {
-    transform: translateX(100%);
     opacity: 0;
 }
 .v-leave-active {
