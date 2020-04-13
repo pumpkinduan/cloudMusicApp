@@ -37,20 +37,20 @@
 ### 项目结构
 ```js
 ├── public           		// 项目不同环境的配置
-|   ├── index.html          // 项目入口文件
-├── dist               		// 项目build目录,用于部署到服务器的项目代码
-├── package.json      		// 项目配置文件
-├── src                		// 生产目录
+|   ├── index.html      // 项目入口文件
+├── dist               	// 项目build目录,用于部署到服务器的项目代码
+├── package.json      	// 项目配置文件
+├── src                	// 生产目录
 │   ├── api       			// api请求
-│   ├── assets              // 图片、字体图标、CSS样式资源
-│   ├── components     		// 各种组件
-│   ├── plugins             // 封装的插件
-│   ├── tool                // 抽离的工具方法
-│   ├── views          		// 各个视图
-│   ├── vuex           	    // vuex状态管理器
-│   ├── App.vue         	// 主页面
-│   ├── router.js     		// 路由配置器
-│   └── main.js       	    // Webpack 预编译入口
+│   ├── assets          // 图片、字体图标、CSS样式资源
+│   ├── components     	// 各种组件
+│   ├── plugins         // 封装的插件
+│   ├── tool            // 抽离的工具方法
+│   ├── views          	// 各个视图
+│   ├── vuex           	// vuex状态管理器
+│   ├── App.vue         // 主页面
+│   ├── router.js     	// 路由配置器
+│   └── main.js       	// Webpack 预编译入口
 ```
 ### 尚为解决的问题
 在该项目中有个比较棘手的麻烦，就是当进入的页面需要加载大量图片的情况下，滚动页面时会有点儿卡卡的   
